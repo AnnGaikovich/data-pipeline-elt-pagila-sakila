@@ -20,3 +20,7 @@ This project automates the ingestion and transformation of data from two demo da
 - **Airbyte** – EL replication (Postgres → Snowflake)
 - **Apache Airflow** – orchestration (DAGs to trigger replication and dbt runs)
 - **dbt** – transformations, testing, documentation
+
+## Branches 
+- Main branch;
+- Development branch initialized.
