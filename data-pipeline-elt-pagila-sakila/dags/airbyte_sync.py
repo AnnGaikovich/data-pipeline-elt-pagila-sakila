@@ -4,13 +4,13 @@ from airflow.operators.python import PythonOperator
 import requests
 
 AIRBYTE_API_URL = "http://host.docker.internal:8000/api/v1"
-CONNECTION_ID_PAGILA = "9ca65cc5-93ea-4702-9336-28b940dcd249"
-CONNECTION_ID_SAKILA = "07c826f5-acf6-4c3e-9b6b-46284f8ec60f"
+CONNECTION_ID_PAGILA = Variable.get("airbyte_connection_id_pagila")
+CONNECTION_ID_SAKILA = Variable.get("airbyte_connection_id_sakila")
 
 def trigger_airbyte_sync(connection_id):
     url = f"{AIRBYTE_API_URL}/connections/sync"
     payload = {"connectionId": connection_id}
-    # Добавляем базовую аутентификацию
+
     response = requests.post(url, json=payload, auth=('airbyte', 'password'))
     response.raise_for_status()
     return response.json()

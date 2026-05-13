@@ -1,11 +1,10 @@
 with actor_rentals as (
     select
-        fa.actor_id,
-        count(r.rental_id) as rental_count
-    from {{ source('pagila', 'film_actor') }} fa
-    join {{ source('pagila', 'inventory') }} i on fa.film_id = i.film_id
-    join {{ source('pagila', 'rental') }} r on i.inventory_id = r.inventory_id
-    group by fa.actor_id
+        fab.actor_id,
+        count(fr.rental_id) as rental_count
+    from {{ ref('fact_rental') }} fr
+    join {{ ref('int_film_actor_bridge') }} fab on fr.film_id = fab.film_id
+    group by fab.actor_id
 )
 select
     a.actor_id,
